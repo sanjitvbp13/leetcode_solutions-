@@ -1,0 +1,77 @@
+
+1380. Lucky Numbers in a Matrix
+
+
+Intuition
+A lucky number in a matrix is defined as a number that is the minimum in its row and the maximum in its column. This means we need to compare values within rows and columns to identify such numbers.
+
+Approach
+Identify the Row Minimums:
+
+Traverse each row and find the minimum value for that row. Store these values in a list called row_minimums.
+Identify the Column Maximums:
+
+Traverse each column and find the maximum value for that column. Store these values in a list called col_maximums.
+Find the Lucky Numbers:
+
+Traverse the matrix again and check for each element if it matches the corresponding row's minimum and the corresponding column's maximum.
+If it does, that element is a lucky number.
+Complexity
+Time Complexity:
+
+Finding the row minimums takes (O(m \times n)) where (m) is the number of rows and (n) is the number of columns.
+Finding the column maximums also takes (O(m \times n)).
+Checking for lucky numbers takes (O(m \times n)).
+Therefore, the overall time complexity is (O(m \times n)).
+Space Complexity:
+
+Storing row minimums and column maximums requires (O(m + n)) space.
+Thus, the space complexity is (O(m + n)).
+Code :
+
+
+class Solution :
+
+    def luckyNumbers(self, matrix: list[list[int]]) -> list[int]:
+        rows = len(matrix)
+        cols = len(matrix[0])
+
+        row_minimums = [float('inf')] * rows
+        col_maximums = [float('-inf')] * cols
+
+        # Determine the row minimums
+        for i in range(rows):
+            for j in range(cols):
+                row_minimums[i] = min(row_minimums[i], matrix[i][j])
+
+        # Determine the column maximums
+        for j in range(cols):
+            for i in range(rows):
+                col_maximums[j] = max(col_maximums[j], matrix[i][j])
+
+        # Find and return the lucky numbers
+        lucky_numbers = []
+        for i in range(rows):
+            for j in range(cols):
+                if matrix[i][j] == row_minimums[i] and matrix[i][j] == col_maximums[j]:
+                    lucky_numbers.append(matrix[i][j])
+
+        return lucky_numbers
+
+        Explanation of the Code
+
+        
+Initialization:
+
+row_minimums is initialized with infinity values to find the minimum values in each row.
+col_maximums is initialized with negative infinity values to find the maximum values in each column.
+Finding Row Minimums:
+
+Nested loops traverse each element of the matrix to update row_minimums with the minimum value found in each row.
+Finding Column Maximums:
+
+Nested loops traverse each element of the matrix to update col_maximums with the maximum value found in each column.
+Identifying Lucky Numbers:
+
+Nested loops check each element in the matrix to see if it matches both its row's minimum and its column's maximum. If it does, it's added to the list of lucky numbers.
+This method ensures we efficiently find all lucky numbers in the matrix with optimal time and space complexity.
